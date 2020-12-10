@@ -1,0 +1,57 @@
+{%include 'base.html'%}
+{% load static %}
+{% load cloudinary %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">  
+{% endblock  %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="card-container">
+
+        {% if profile.avatar %}
+        <img class="round img-fluid rounded-circle" src="{{ profile.avatar.url }}" alt="userpic" />
+        {% else %}
+        <img class="round img-fluid rounded-circle" src="/static/img/code.jpg" alt="userpic" />
+        {% endif %}
+
+        <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
+        <h3 class="text-muted">@{{profile.user.username}}</h3>
+        
+        {% if profile.location %}
+        <h6><i class="fas fa-map-marker-alt">  {{ profile.location }}</i></h6>
+        {% else %}
+        <h6><i class="fas fa-map-marker-alt">  Please Set Your Location..!!</i></h6>
+        {% endif %}
+            
+        {% if profile.phone %}
+        <p><i class="fas fa-briefcase"></i>   {{ <profile class="phone"></profile> }}</p>
+        {% else %}
+        <p>Set Your Phone Number</p>
+        {% endif %}
+                
+        <div class="contact">
+            <h3 style="text-decoration: underline;">Email</h3>
+            <a class=""><i class="fas fa-envelope">  {{ profile.user.email }}</i></a>
+        </div>
+        
+       
+        <div class="buttons">
+            {% if request.user == profile.user %}
+            <a href="{% url 'editProfile' profile.user %}" class="btn primary">
+                Edit Profile
+            </a>
+            {% endif %}
+            
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+  
+{% endblock  %}
